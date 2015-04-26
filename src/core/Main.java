@@ -1,5 +1,6 @@
 package core;
 
+import enemies.Enemy;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,6 +47,9 @@ public abstract class Main {
         Mouse.create();
 
         new Player(new Vec3(10, 10, 0));
+        new Enemy(new Vec3(10, 10, 0));
+        new Enemy(new Vec3(15, 10, 0));
+        new Enemy(new Vec3(20, 10, 0));
     }
 
     public static void run() {

@@ -3,6 +3,8 @@ package core;
 import graphics.RenderManagerComponent;
 import graphics.RenderManagerSystem;
 import graphics.SunComponent;
+import level.LevelComponent;
+import level.LevelSystem;
 
 public class GameManager extends AbstractEntity {
 
@@ -19,5 +21,8 @@ public class GameManager extends AbstractEntity {
         add(new FPSManagerSystem(fmc));
 
         elc = add(new EntityListComponent());
+
+        LevelComponent lc = add(new LevelComponent(30));
+        add(new LevelSystem(lc));
     }
 }

@@ -24,4 +24,16 @@ public class EntityListComponent extends AbstractComponent {
         }
         return r;
     }
+
+    public <E extends AbstractComponent> ArrayList<E> getListC(Class<E> c) {
+        ArrayList<E> r = new ArrayList();
+        for (AbstractEntity e : list) {
+            for (AbstractComponent ac : e.componentList) {
+                if (c.isInstance(ac)) {
+                    r.add((E) ac);
+                }
+            }
+        }
+        return r;
+    }
 }

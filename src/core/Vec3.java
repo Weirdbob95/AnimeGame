@@ -81,8 +81,16 @@ public class Vec3 {
         return multiply(1 / length());
     }
 
+    public static Vec3 random(double r) {
+        return new Vec3(Math.random() * 2 * r - r, Math.random() * 2 * r - r, Math.random() * 2 * r - r);
+    }
+
     public Vec3 reverse() {
         return new Vec3(-x, -y, -z);
+    }
+
+    public Vec3 setLength(double l) {
+        return multiply(l / length());
     }
 
     public Vec3 setX(double x) {

@@ -8,8 +8,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class SunComponent extends AbstractComponent {
 
-    public double theta;
-    public double phi;
+    private double theta;
+    private double phi;
 
     public SunComponent() {
         theta = -Math.PI / 4;
@@ -18,8 +18,27 @@ public class SunComponent extends AbstractComponent {
 
         glLight(GL_LIGHT0, GL_POSITION, floatBuffer(pos.x, pos.y, pos.z, 0));
         glLight(GL_LIGHT0, GL_SPECULAR, floatBuffer(1, 1, 1, 1));
-        glLight(GL_LIGHT0, GL_DIFFUSE, floatBuffer(1, 1, 1, 1));									// enables lighting
+        glLight(GL_LIGHT0, GL_DIFFUSE, floatBuffer(.5, .5, .5, 1));
         glEnable(GL_LIGHT0);
     }
 
+    public double getTheta() {
+        return theta;
+    }
+
+    public double getPhi() {
+        return phi;
+    }
+
+    public void setTheta(double theta) {
+        this.theta = theta;
+        Vec3 pos = new Vec3Polar(1, theta, phi).toRect();
+        glLight(GL_LIGHT0, GL_POSITION, floatBuffer(pos.x, pos.y, pos.z, 0));
+    }
+
+    public void setPhi(double phi) {
+        this.phi = phi;
+        Vec3 pos = new Vec3Polar(1, theta, phi).toRect();
+        glLight(GL_LIGHT0, GL_POSITION, floatBuffer(pos.x, pos.y, pos.z, 0));
+    }
 }

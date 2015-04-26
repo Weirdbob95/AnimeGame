@@ -9,6 +9,7 @@ public class RenderManagerComponent extends AbstractComponent {
     public boolean startFullscreen;
     public int viewWidth, viewHeight;
     public Vec3 pos, lookAt;
+    public double fov;
     public static final Vec3 UP = new Vec3(0, 0, 1);
 
     public RenderManagerComponent() {
@@ -18,5 +19,6 @@ public class RenderManagerComponent extends AbstractComponent {
 
         pos = new Vec3(25, 15, 5);
         lookAt = new Vec3(0, 1, 5);
+        fov = 70;
     }
 }

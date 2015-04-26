@@ -2,7 +2,6 @@ package graphics;
 
 import core.*;
 import static core.Util.floatBuffer;
-import java.io.IOException;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -122,7 +121,7 @@ public class RenderManagerSystem extends AbstractSystem {
         //3D
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        gluPerspective(70, (float) rmc.viewWidth / rmc.viewHeight, 0.1f, 1000);
+        gluPerspective((float) rmc.fov, (float) rmc.viewWidth / rmc.viewHeight, 0.1f, 1000);
         gluLookAt((float) rmc.pos.x, (float) rmc.pos.y, (float) rmc.pos.z,
                 (float) rmc.lookAt.x, (float) rmc.lookAt.y, (float) rmc.lookAt.z,
                 (float) rmc.UP.x, (float) rmc.UP.y, (float) rmc.UP.z);
@@ -133,39 +132,6 @@ public class RenderManagerSystem extends AbstractSystem {
         //3D
         glClear(GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
-
-        //Movement
-//        Vec3Polar change = rmc.lookAt.subtract(rmc.pos).toPolar();
-//        double newP = change.p + MouseInput.mouseDelta().y / 500;
-//        if (newP < -1.4) {
-//            newP = -1.4;
-//        }
-//        if (newP > 1.4) {
-//            newP = 1.4;
-//        }
-//        if (Keys.isDown(Keyboard.KEY_W)) {
-//            rmc.pos = rmc.pos.add(new Vec3Polar(1, change.t, 0).toRect());
-//        }
-//        if (Keys.isDown(Keyboard.KEY_A)) {
-//            rmc.pos = rmc.pos.add(new Vec3Polar(1, change.t + Math.PI / 2, 0).toRect());
-//        }
-//        if (Keys.isDown(Keyboard.KEY_S)) {
-//            rmc.pos = rmc.pos.add(new Vec3Polar(1, change.t + Math.PI, 0).toRect());
-////        }
-////        if (Keys.isDown(Keyboard.KEY_D)) {
-////            rmc.pos = rmc.pos.add(new Vec3Polar(1, change.t + Math.PI * 3 / 2, 0).toRect());
-////        }
-//
-//        rmc.lookAt = rmc.pos.add(change.setT(change.t - MouseInput.mouseDelta().x / 500).setP(newP).setR(1).toRect());
-        Graphics.fillRect(new Vec3(0, 0, 0), 20, 10, 0, 0, new Color4d(.4, .4, .4));
-        Graphics.fillRect(new Vec3(0, 0, 0), 10, 10, 90, 0, Color4d.RED);
-        Graphics.fillRect(new Vec3(0, 0, 0), 10, 5, 90, 45, Color4d.GREEN);
-        Graphics.fillRect(new Vec3(0, 0, 0), 5, 15, 90, 90, Color4d.BLUE);
-        try {
-            Graphics.drawSprite(SpriteContainer.loadSprite("ball"), new Vec3(0, 10, 0), 10, 10, 90, 90, Color4d.WHITE);
-            Graphics.drawSprite(SpriteContainer.loadSprite("ball"), new Vec3(-.01, 20, 0), 10, 10, 90, -90, Color4d.WHITE);
-        } catch (IOException ex) {
-        }
     }
 
 }
