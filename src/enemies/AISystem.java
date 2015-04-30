@@ -21,8 +21,8 @@ public class AISystem extends AbstractSystem {
 
     @Override
     public void update() {
-        vc.vel = Main.gameManager.elc.get(Player.class).getComponent(PositionComponent.class).pos.subtract(pc.pos).setLength(.05).setZ(vc.vel.z);
-        rc.rot = vc.vel.direction() + Math.PI / 2;
+        vc.vel = Main.gameManager.elc.getEntity(Player.class).getComponent(PositionComponent.class).pos.subtract(pc.pos).setLength(.05).setZ(vc.vel.z);
+        rc.rot = vc.vel.direction();
     }
 
 }

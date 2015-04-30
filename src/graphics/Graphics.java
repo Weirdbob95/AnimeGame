@@ -71,17 +71,16 @@ public abstract class Graphics {
         glTranslated(pos.x, pos.y, pos.z);
         glRotated(angle, 0, 0, 1);
         glRotated(tilt, 1, 0, 0);
-        //glTranslated(0, 0, size.z / 2);
-        //glScaled(size.x, size.y, size.z);
+        double dir = Math.signum(hor * ver);
         glBegin(GL_QUADS);
         {
-            glNormal3d(0, 0, 1);
+            glNormal3d(0, 0, dir);
             glVertex3d(0, 0, 0);
-            glNormal3d(0, 0, 1);
+            glNormal3d(0, 0, dir);
             glVertex3d(hor, 0, 0);
-            glNormal3d(0, 0, 1);
+            glNormal3d(0, 0, dir);
             glVertex3d(hor, ver, 0);
-            glNormal3d(0, 0, 1);
+            glNormal3d(0, 0, dir);
             glVertex3d(0, ver, 0);
         }
         glEnd();

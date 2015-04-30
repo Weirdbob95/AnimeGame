@@ -16,7 +16,7 @@ public class CameraSystem extends AbstractSystem {
 
     @Override
     public void update() {
-        Main.gameManager.rmc.pos = pc.pos.add(new Vec3(0, -5, 5));
+        Main.gameManager.rmc.pos = pc.pos.add(new Vec3(0, -5, 15));
         Main.gameManager.rmc.lookAt = pc.pos;
         Main.gameManager.getComponent(SunComponent.class).setTheta(Main.gameManager.getComponent(SunComponent.class).getTheta() + .01);
     }

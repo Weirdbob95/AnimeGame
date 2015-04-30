@@ -1,6 +1,7 @@
 package player;
 
 import core.AbstractComponent;
+import core.AbstractEntity;
 import core.Main;
 import core.Vec3;
 import level.LevelComponent;
@@ -8,12 +9,14 @@ import movement.PositionComponent;
 
 public class CollisionComponent extends AbstractComponent {
 
+    public AbstractEntity ae;
     public PositionComponent pc;
     public double height;
     public double width;
     public boolean heightCentered;
 
-    public CollisionComponent(PositionComponent pc, double height, double width, boolean heightCentered) {
+    public CollisionComponent(AbstractEntity ae, PositionComponent pc, double height, double width, boolean heightCentered) {
+        this.ae = ae;
         this.pc = pc;
         this.height = height;
         this.width = width;

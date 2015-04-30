@@ -29,12 +29,18 @@ public class ModelSystem extends AbstractSystem {
             glDisable(GL_TEXTURE_2D);
             SunComponent sc = Main.gameManager.getComponent(SunComponent.class);
 
+            //Test
+//            Color4d.RED.glColor();
+//            glPushMatrix();
+//            glTranslated(pc.pos.x, pc.pos.y, pc.pos.z);
+//            glScaled(mc.scale, mc.scale, mc.scale);
+//            mc.getModel().opengldraw();
+//            glPopMatrix();
             //Model
             mc.color.glColor();
             glPushMatrix();
             glTranslated(pc.pos.x, pc.pos.y, pc.pos.z);
             glRotated(rc.rot * 180 / Math.PI, 0, 0, 1);
-            glRotated(90, 1, 0, 0);
             glScaled(mc.scale, mc.scale, mc.scale);
             mc.getModel().opengldraw();
             glPopMatrix();
@@ -43,13 +49,12 @@ public class ModelSystem extends AbstractSystem {
                 //Shadow
                 Color4d.BLACK.glColor();
                 glPushMatrix();
-                glTranslated(pc.pos.x, pc.pos.y, pc.pos.z + .01);
+                glTranslated(pc.pos.x - pc.pos.z * Math.cos(sc.getTheta()) / Math.tan(sc.getPhi()), pc.pos.y - pc.pos.z * Math.sin(sc.getTheta()) / Math.tan(sc.getPhi()), .01);
                 glRotated(rc.rot * 180 / Math.PI, 0, 0, 1);
-                glRotated(90, 1, 0, 0);
                 glMultMatrix(floatBuffer(
                         1, 0, 0, 0,
-                        -Math.cos(rc.rot - sc.getTheta()) / Math.tan(sc.getPhi()), 0, -Math.sin(rc.rot - sc.getTheta()) / Math.tan(sc.getPhi()), 0,
-                        0, 0, 1, 0,
+                        0, 1, 0, 0,
+                        -Math.cos(sc.getTheta() - rc.rot) / Math.tan(sc.getPhi()), -Math.sin(sc.getTheta() - rc.rot) / Math.tan(sc.getPhi()), 0, 0,
                         0, 0, 0, 1));
                 glScaled(mc.scale, mc.scale, mc.scale);
                 mc.getModel().opengldraw();

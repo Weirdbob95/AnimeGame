@@ -21,11 +21,15 @@ public class LevelSystem extends AbstractSystem {
                 Graphics.fillRect(new Vec3(i, j, t.height), 1, 1, 0, 0, WHITE);
                 if (i > 0) {
                     Tile t1 = lc.tileGrid[i - 1][j];
-                    Graphics.fillRect(new Vec3(i, j, t.height), 1, t1.height - t.height, 90, 90, WHITE);
+                    if (t1.height != t.height) {
+                        Graphics.fillRect(new Vec3(i, j, t.height), 1, t1.height - t.height, 90, 90, WHITE);
+                    }
                 }
                 if (j > 0) {
                     Tile t1 = lc.tileGrid[i][j - 1];
-                    Graphics.fillRect(new Vec3(i, j, t.height), 1, t1.height - t.height, 90, 0, WHITE);
+                    if (t1.height != t.height) {
+                        Graphics.fillRect(new Vec3(i + 1, j, t.height), -1, t1.height - t.height, 90, 0, WHITE);
+                    }
                 }
             }
         }

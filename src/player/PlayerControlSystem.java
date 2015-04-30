@@ -1,6 +1,7 @@
 package player;
 
 import core.*;
+import graphics.ModelComponent;
 import graphics.RenderManagerComponent;
 import movement.PositionComponent;
 import movement.RotationComponent;
@@ -14,12 +15,14 @@ public class PlayerControlSystem extends AbstractSystem {
     private VelocityComponent vc;
     private RotationComponent rc;
     private CollisionComponent cc;
+    private ModelComponent mc;
 
-    public PlayerControlSystem(PositionComponent pc, VelocityComponent vc, RotationComponent rc, CollisionComponent cc) {
+    public PlayerControlSystem(PositionComponent pc, VelocityComponent vc, RotationComponent rc, CollisionComponent cc, ModelComponent mc) {
         this.pc = pc;
         this.vc = vc;
         this.rc = rc;
         this.cc = cc;
+        this.mc = mc;
     }
 
     private Vec3 mousePos() {
@@ -44,27 +47,39 @@ public class PlayerControlSystem extends AbstractSystem {
         double fall = vc.vel.z;
         vc.vel = new Vec3();
         if (Keys.isDown(Keyboard.KEY_W)) {
-            vc.vel = vc.vel.add(new Vec3(0, .1, 0));
+            vc.vel = vc.vel.add(new Vec3(0, .2, 0));
         }
         if (Keys.isDown(Keyboard.KEY_A)) {
-            vc.vel = vc.vel.add(new Vec3(-.1, 0, 0));
+            vc.vel = vc.vel.add(new Vec3(-.2, 0, 0));
         }
         if (Keys.isDown(Keyboard.KEY_S)) {
-            vc.vel = vc.vel.add(new Vec3(0, -.1, 0));
+            vc.vel = vc.vel.add(new Vec3(0, -.2, 0));
         }
         if (Keys.isDown(Keyboard.KEY_D)) {
-            vc.vel = vc.vel.add(new Vec3(.1, 0, 0));
+            vc.vel = vc.vel.add(new Vec3(.2, 0, 0));
         }
 
         if (MouseInput.isDown(0)) {
             Vec3 mousePos = mousePos();
             if (mousePos != null) {
-                vc.vel = mousePos.subtract(pc.pos).setLength(.1);
+                vc.vel = mousePos.subtract(pc.pos).setLength(.2);
+            }
+        }
+
+        if (MouseInput.isDown(1)) {
+            Vec3 mousePos = mousePos();
+            if (mousePos != null) {
+                vc.vel = mousePos.subtract(pc.pos).setLength(.5);
             }
         }
 
         if (!vc.vel.equals(new Vec3())) {
-            rc.rot = vc.vel.direction() + Math.PI / 2;
+            rc.rot = vc.vel.direction();
+            mc.setAnim(10, "run");
+            mc.animSpeed = .5;
+        } else {
+            mc.setAnim("player_actionpose");
+            mc.animSpeed = 0;
         }
 
         if (Keys.isDown(KEY_SPACE)) {
@@ -74,8 +89,6 @@ public class PlayerControlSystem extends AbstractSystem {
         }
 
         vc.vel = vc.vel.setZ(fall);
-
-        System.out.println(pc.pos);
     }
 
 }

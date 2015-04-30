@@ -18,7 +18,7 @@ public class Enemy extends AbstractEntity {
         PreviousPositionComponent ppc = add(new PreviousPositionComponent(pos));
         GravityComponent gc = add(new GravityComponent());
         ModelComponent mc = add(new ModelComponent(.2, new Color4d(1, .3, 0), "player_actionpose"));
-        CollisionComponent cc = add(new CollisionComponent(pc, 1, .5, false));
+        CollisionComponent cc = add(new CollisionComponent(this, pc, 1, .5, false));
         //Systems
         add(new AISystem(pc, vc, rc));
         add(new VelocitySystem(pc, vc));

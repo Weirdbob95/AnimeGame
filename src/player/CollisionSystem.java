@@ -2,7 +2,9 @@ package player;
 
 import core.AbstractSystem;
 import core.Main;
+import core.MouseInput;
 import core.Vec3;
+import enemies.Enemy;
 import movement.PositionComponent;
 import movement.PreviousPositionComponent;
 import movement.VelocityComponent;
@@ -24,10 +26,18 @@ public class CollisionSystem extends AbstractSystem {
     @Override
     public void update() {
         //Collide with units
-        for (CollisionComponent other : Main.gameManager.elc.getListC(CollisionComponent.class)) {
+        for (Object o : Main.gameManager.elc.getComponentList(CollisionComponent.class).toArray()) {
+            CollisionComponent other = (CollisionComponent) o;
             if (other != cc) {
                 Vec3 diff = other.pc.pos.subtract(pc.pos).setZ(0);
                 if (diff.lengthSquared() < 3 * cc.width * other.width) {//(sc.size + other.size) * (sc.size + other.size)) {
+                    if (cc.ae instanceof Player && other.ae instanceof Enemy) {
+                        if (MouseInput.isDown(1)) {
+                            other.ae.destroySelf();
+                        } else {
+                            cc.ae.getComponent(PlayerHealthComponent.class).damage++;
+                        }
+                    }
                     Vec3 diffN = diff.normalize();
                     if (vc.vel.dot(diffN) >= 0) {
                         Vec3 change = diff.subtract(diffN.multiply(cc.width + other.width)).multiply(.05);

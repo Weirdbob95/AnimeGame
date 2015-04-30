@@ -12,12 +12,15 @@ public abstract class AbstractEntity {
         componentList = new ArrayList();
         systemList = new ArrayList();
         if (!(this instanceof GameManager)) {
-            Main.gameManager.elc.list.add(this);
+            Main.gameManager.elc.add(this);
         }
     }
 
     protected <E extends AbstractComponent> E add(E c) {
         componentList.add(c);
+        if (!(this instanceof GameManager)) {
+            Main.gameManager.elc.add(c);
+        }
         return c;
     }
 
@@ -41,7 +44,7 @@ public abstract class AbstractEntity {
         for (AbstractSystem s : systemList) {
             s.destroy();
         }
-        Main.gameManager.elc.list.remove(this);
+        Main.gameManager.elc.remove(this);
     }
 
     public <E extends AbstractComponent> E getComponent(Class<E> e) {

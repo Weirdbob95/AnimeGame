@@ -47,9 +47,10 @@ public abstract class Main {
         Mouse.create();
 
         new Player(new Vec3(10, 10, 0));
-        new Enemy(new Vec3(10, 10, 0));
-        new Enemy(new Vec3(15, 10, 0));
-        new Enemy(new Vec3(20, 10, 0));
+
+        for (int i = 0; i < 100; i++) {
+            new Enemy(Vec3.random(10).add(new Vec3(15, 15, 0)).setZ(0));
+        }
     }
 
     public static void run() {

@@ -31,7 +31,7 @@ public class Model {
     public Model(String name) {
         try {
             loadobject(new BufferedReader(new FileReader(name)));
-            translate(new Vec3(0, -bottompoint, 0));
+            translate(new Vec3(0, 0, -farpoint));
             opengldrawtolist();
             polyCount = faces.size();
             cleanup();
@@ -62,7 +62,7 @@ public class Model {
                 if (newline.length() > 0) {
                     if (newline.charAt(0) == 'v' && newline.charAt(1) == ' ') {
                         String[] coordstext = newline.split("\\s+");
-                        Vec3 coords = new Vec3(Double.valueOf(coordstext[1]), Double.valueOf(coordstext[2]), Double.valueOf(coordstext[3]));
+                        Vec3 coords = new Vec3(Double.valueOf(coordstext[3]), Double.valueOf(coordstext[1]), Double.valueOf(coordstext[2]));
                         //// check for farpoints ////
                         if (firstpass) {
                             rightpoint = coords.x;
@@ -96,12 +96,12 @@ public class Model {
                     }
                     if (newline.charAt(0) == 'v' && newline.charAt(1) == 't') {
                         String[] coordstext = newline.split("\\s+");
-                        Vec3 coords = new Vec3(Double.valueOf(coordstext[1]), Double.valueOf(coordstext[2]), Double.valueOf(coordstext[3]));
+                        Vec3 coords = new Vec3(Double.valueOf(coordstext[3]), Double.valueOf(coordstext[1]), Double.valueOf(coordstext[2]));
                         vertexTex.add(coords);
                     }
                     if (newline.charAt(0) == 'v' && newline.charAt(1) == 'n') {
                         String[] coordstext = newline.split("\\s+");
-                        Vec3 coords = new Vec3(Double.valueOf(coordstext[1]), Double.valueOf(coordstext[2]), Double.valueOf(coordstext[3]));
+                        Vec3 coords = new Vec3(Double.valueOf(coordstext[3]), Double.valueOf(coordstext[1]), Double.valueOf(coordstext[2]));
                         vertexNormals.add(coords);
                     }
                     if (newline.charAt(0) == 'f' && newline.charAt(1) == ' ') {
