@@ -1,11 +1,16 @@
 package graphics;
 
+import graphics.data.Animation;
+import graphics.data.Model;
+import graphics.loading.ModelContainer;
 import core.AbstractComponent;
-import core.Color4d;
+import util.Color4d;
 import java.util.ArrayList;
 
 public class ModelComponent extends AbstractComponent {
 
+    public String name;
+    public Animation anim;
     public ArrayList<Model> modelList;
     public double animIndex;
     public double animSpeed;
@@ -14,39 +19,56 @@ public class ModelComponent extends AbstractComponent {
     public double scale;
     public Color4d color;
 
-    public ModelComponent(double scale, Color4d color, String... names) {
+    public ModelComponent(Animation anim, double scale, Color4d color) {
         modelList = new ArrayList();
-        setAnim(names);
+        setAnim(anim);
         visible = true;
         shadow = true;
         this.scale = scale;
         this.color = color;
     }
 
-    public ModelComponent(double scale, Color4d color, int length, String name) {
+    public ModelComponent(String name, double scale, Color4d color) {
         modelList = new ArrayList();
-        setAnim(length, name);
+        setModel(name);
         visible = true;
         shadow = true;
         this.scale = scale;
         this.color = color;
+    }
+
+    public boolean animComplete() {
+        return animIndex >= modelList.size();
     }
 
     public Model getModel() {
         return modelList.get((int) animIndex % modelList.size());
     }
 
-    public void setAnim(String... names) {
+    public void setAnim(Animation anim) {
+        if (this.anim == anim) {
+            return;
+        }
+        name = anim.name;
+        this.anim = anim;
+        animIndex = 0;
+        animSpeed = anim.speed;
         modelList.clear();
-        for (String name : names) {
+        if (anim.length == -1) {
             modelList.add(ModelContainer.loadModel(name));
+        } else {
+            for (int i = 1; i <= anim.length; i++) {
+                modelList.add(ModelContainer.loadModel(name + "/" + i));
+            }
         }
     }
 
-    public void setAnim(int length, String name) {
+    public void setModel(String name) {
+        this.name = name;
+        anim = null;
+        animIndex = 0;
+        animSpeed = 0;
         modelList.clear();
-        for (int i = 1; i <= length; i++) {
-            modelList.add(ModelContainer.loadModel(name + "/" + i));
-        }
+        modelList.add(ModelContainer.loadModel(name));
     }
 }

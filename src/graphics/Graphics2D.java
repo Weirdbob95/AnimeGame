@@ -1,7 +1,9 @@
 package graphics;
 
-import core.Color4d;
-import core.Vec2;
+import graphics.data.Texture;
+import graphics.loading.FontContainer;
+import util.Color4d;
+import util.Vec2;
 import java.util.ArrayList;
 import static org.lwjgl.opengl.GL11.*;
 import org.newdawn.slick.Color;

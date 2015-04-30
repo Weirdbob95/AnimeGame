@@ -1,4 +1,4 @@
-package core;
+package util;
 
 import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;

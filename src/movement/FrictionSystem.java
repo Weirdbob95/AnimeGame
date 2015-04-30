@@ -1,7 +1,7 @@
 package movement;
 
 import core.AbstractSystem;
-import core.Vec3;
+import util.Vec3;
 
 public class FrictionSystem extends AbstractSystem {
 

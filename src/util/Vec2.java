@@ -1,4 +1,4 @@
-package core;
+package util;
 
 import static org.lwjgl.opengl.GL11.glVertex2d;
 

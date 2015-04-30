@@ -1,7 +1,7 @@
 package graphics;
 
 import core.*;
-import static core.Util.floatBuffer;
+import static util.Util.floatBuffer;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -16,7 +16,7 @@ public class RenderManagerSystem extends AbstractSystem {
 
         try {
             //Display Init
-            Camera.setDisplayMode(rmc.displayWidth, rmc.displayHeight, rmc.startFullscreen);
+            Camera.setDisplayMode(rmc.viewSize, rmc.startFullscreen);
             Display.setVSyncEnabled(true);
             Display.setResizable(true);
             Display.setTitle("So how are you today?");
@@ -46,12 +46,15 @@ public class RenderManagerSystem extends AbstractSystem {
     @Override
     public void update() {
         if (Keys.isPressed(Keyboard.KEY_F11)) {
-            Camera.setDisplayMode(rmc.displayWidth, rmc.displayHeight, !Display.isFullscreen());
+            Camera.setDisplayMode(rmc.viewSize, !Display.isFullscreen());
         }
 
-        Camera.calculateViewport(new Vec2(rmc.viewWidth, rmc.viewHeight));
+        Camera.calculateViewport(rmc.viewSize);
 
-        Camera.setProjection3D(rmc.fov, rmc.displayWidth / rmc.displayHeight, rmc.pos, rmc.lookAt, rmc.UP);
+        Camera.setProjection3D(rmc.fov, rmc.aspectRatio(), rmc.pos, rmc.lookAt, rmc.UP);
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(1, 1, 1, 1);
     }
 
 }

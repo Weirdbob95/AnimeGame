@@ -3,7 +3,7 @@ package player;
 import core.AbstractComponent;
 import core.AbstractEntity;
 import core.Main;
-import core.Vec3;
+import util.Vec3;
 import level.LevelComponent;
 import movement.PositionComponent;
 

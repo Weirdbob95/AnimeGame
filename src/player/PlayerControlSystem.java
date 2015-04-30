@@ -1,6 +1,9 @@
 package player;
 
+import util.Vec2;
+import util.Vec3;
 import core.*;
+import graphics.data.Animation;
 import graphics.ModelComponent;
 import graphics.RenderManagerComponent;
 import movement.PositionComponent;
@@ -27,12 +30,12 @@ public class PlayerControlSystem extends AbstractSystem {
 
     private Vec3 mousePos() {
         RenderManagerComponent rmc = Main.gameManager.rmc;
-        Vec2 mouse2 = MouseInput.mouse().divide(new Vec2(rmc.viewWidth, rmc.viewHeight));
+        Vec2 mouse2 = MouseInput.mouse().divide(rmc.viewSize);
         Vec3 viewDir = rmc.lookAt.subtract(rmc.pos).normalize();
         Vec3 viewHor = viewDir.cross(new Vec3(0, 0, 1));
         Vec3 viewVer = viewDir.cross(viewHor).reverse();
         double height = Math.tan(rmc.fov * Math.PI / 360) * Math.sqrt(2); //The sqrt(2) doesn't make any sense, it should be a 1, but it works
-        double width = height * rmc.viewWidth / rmc.viewHeight;
+        double width = height * rmc.aspectRatio();
         Vec3 LL = rmc.pos.add(viewDir).subtract(viewHor.multiply(width)).subtract(viewVer.multiply(height));
         Vec3 mouse3 = LL.add(viewHor.multiply(width * 2 * mouse2.x)).add(viewVer.multiply(height * 2 * mouse2.y));
         Vec3 toMouse = mouse3.subtract(rmc.pos);
@@ -46,45 +49,57 @@ public class PlayerControlSystem extends AbstractSystem {
     public void update() {
         double fall = vc.vel.z;
         vc.vel = new Vec3();
-        if (Keys.isDown(Keyboard.KEY_W)) {
-            vc.vel = vc.vel.add(new Vec3(0, .2, 0));
-        }
-        if (Keys.isDown(Keyboard.KEY_A)) {
-            vc.vel = vc.vel.add(new Vec3(-.2, 0, 0));
-        }
-        if (Keys.isDown(Keyboard.KEY_S)) {
-            vc.vel = vc.vel.add(new Vec3(0, -.2, 0));
-        }
-        if (Keys.isDown(Keyboard.KEY_D)) {
-            vc.vel = vc.vel.add(new Vec3(.2, 0, 0));
-        }
 
-        if (MouseInput.isDown(0)) {
-            Vec3 mousePos = mousePos();
-            if (mousePos != null) {
-                vc.vel = mousePos.subtract(pc.pos).setLength(.2);
+        if (mc.animComplete() || mc.anim.canMove) {
+            //WASD
+            if (Keys.isDown(Keyboard.KEY_W)) {
+                vc.vel = vc.vel.add(new Vec3(0, .2, 0));
             }
-        }
-
-        if (MouseInput.isDown(1)) {
-            Vec3 mousePos = mousePos();
-            if (mousePos != null) {
-                vc.vel = mousePos.subtract(pc.pos).setLength(.5);
+            if (Keys.isDown(Keyboard.KEY_A)) {
+                vc.vel = vc.vel.add(new Vec3(-.2, 0, 0));
             }
-        }
+            if (Keys.isDown(Keyboard.KEY_S)) {
+                vc.vel = vc.vel.add(new Vec3(0, -.2, 0));
+            }
+            if (Keys.isDown(Keyboard.KEY_D)) {
+                vc.vel = vc.vel.add(new Vec3(.2, 0, 0));
+            }
 
-        if (!vc.vel.equals(new Vec3())) {
-            rc.rot = vc.vel.direction();
-            mc.setAnim(10, "run");
-            mc.animSpeed = .5;
-        } else {
-            mc.setAnim("player_actionpose");
-            mc.animSpeed = 0;
-        }
+            //Mouse move
+            if (MouseInput.isDown(0)) {
+                Vec3 mousePos = mousePos();
+                if (mousePos != null) {
+                    vc.vel = mousePos.subtract(pc.pos).setLength(.2);
+                }
+            }
+            if (MouseInput.isDown(1)) {
+                Vec3 mousePos = mousePos();
+                if (mousePos != null) {
+                    vc.vel = mousePos.subtract(pc.pos).setLength(.5);
+                }
+            }
 
-        if (Keys.isDown(KEY_SPACE)) {
-            if (!cc.open(pc.pos.add(new Vec3(0, 0, -.1)))) {
-                fall = .2;
+            //Jumping
+            if (Keys.isDown(KEY_SPACE)) {
+                if (!cc.open(pc.pos.add(new Vec3(0, 0, -.1)))) {
+                    fall = .2;
+                }
+            }
+
+            //Rotation and animation
+            if (!vc.vel.equals(new Vec3())) {
+                rc.rot = vc.vel.direction();
+                mc.setAnim(Animation.RUN);
+                if (MouseInput.isDown(1)) {
+                    mc.animSpeed = 1;
+                }
+            } else {
+                mc.setAnim(Animation.STAND);
+            }
+
+            //Attack
+            if (MouseInput.isPressed(0)) {
+                mc.setAnim(Animation.ATTACK);
             }
         }
 

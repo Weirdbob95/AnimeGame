@@ -1,5 +1,6 @@
-package graphics;
+package graphics.loading;
 
+import graphics.data.Model;
 import java.util.HashMap;
 
 public abstract class ModelContainer {

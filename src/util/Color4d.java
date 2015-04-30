@@ -1,6 +1,6 @@
-package core;
+package util;
 
-import static core.Util.floatBuffer;
+import static util.Util.floatBuffer;
 import java.nio.FloatBuffer;
 import org.lwjgl.opengl.GL11;
 

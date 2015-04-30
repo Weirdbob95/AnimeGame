@@ -1,9 +1,10 @@
 package player;
 
 import core.AbstractSystem;
-import core.Color4d;
-import core.Vec2;
+import core.Main;
 import graphics.Graphics2D;
+import util.Color4d;
+import util.Vec2;
 
 public class PlayerHealthSystem extends AbstractSystem {
 
@@ -24,7 +25,7 @@ public class PlayerHealthSystem extends AbstractSystem {
         phc.damage *= .9;
         double amt = phc.damage / 100;
 
-        Graphics2D.fillRect(new Vec2(0, 0), new Vec2(1920, 1080), Color4d.RED.setA(amt));
+        Graphics2D.fillRect(new Vec2(), Main.gameManager.rmc.viewSize, Color4d.RED.setA(amt));
     }
 
 }

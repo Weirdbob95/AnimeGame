@@ -1,7 +1,7 @@
 package movement;
 
 import core.AbstractComponent;
-import core.Vec3;
+import util.Vec3;
 
 public class PositionComponent extends AbstractComponent {
 

@@ -1,5 +1,6 @@
-package graphics;
+package graphics.loading;
 
+import graphics.data.GLFont;
 import java.awt.Font;
 import java.util.HashMap;
 

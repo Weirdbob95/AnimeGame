@@ -3,7 +3,7 @@ package player;
 import core.AbstractSystem;
 import core.Main;
 import core.MouseInput;
-import core.Vec3;
+import util.Vec3;
 import enemies.Enemy;
 import movement.PositionComponent;
 import movement.PreviousPositionComponent;
@@ -40,7 +40,7 @@ public class CollisionSystem extends AbstractSystem {
                     }
                     Vec3 diffN = diff.normalize();
                     if (vc.vel.dot(diffN) >= 0) {
-                        Vec3 change = diff.subtract(diffN.multiply(cc.width + other.width)).multiply(.05);
+                        Vec3 change = diff.subtract(diffN.multiply(cc.width + other.width)).multiply(.1);
                         pc.pos = pc.pos.add(change);
                         other.pc.pos = other.pc.pos.subtract(change);
                         vc.vel = vc.vel.subtract(diffN.multiply(vc.vel.dot(diffN)));
@@ -53,7 +53,7 @@ public class CollisionSystem extends AbstractSystem {
             Vec3 diff = pc.pos.subtract(ppc.pos);
             pc.pos = ppc.pos;
             if (!cc.open(pc.pos)) {
-                System.out.println("bad");
+                throw new RuntimeException("Creature trapped in wall");
             }
             for (int i = 0; i < 10; i++) {
                 if (cc.open(pc.pos.add(new Vec3(diff.x * .1, 0, 0)))) {

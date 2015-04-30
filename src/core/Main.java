@@ -1,5 +1,6 @@
 package core;
 
+import util.Vec3;
 import enemies.Enemy;
 import java.io.File;
 import java.io.IOException;

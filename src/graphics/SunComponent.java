@@ -1,9 +1,9 @@
 package graphics;
 
 import core.AbstractComponent;
-import static core.Util.floatBuffer;
-import core.Vec3;
-import core.Vec3Polar;
+import static util.Util.floatBuffer;
+import util.Vec3;
+import util.Vec3Polar;
 import static org.lwjgl.opengl.GL11.*;
 
 public class SunComponent extends AbstractComponent {

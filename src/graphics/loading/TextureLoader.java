@@ -1,5 +1,6 @@
-package graphics;
+package graphics.loading;
 
+import graphics.data.Texture;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.color.ColorSpace;

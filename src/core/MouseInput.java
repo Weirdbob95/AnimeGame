@@ -1,5 +1,6 @@
 package core;
 
+import util.Vec2;
 import graphics.RenderManagerComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,21 +66,21 @@ public abstract class MouseInput {
         RenderManagerComponent rmc = Main.gameManager.rmc;
         double w = Display.getWidth();
         double h = Display.getHeight();
-        double dw = rmc.viewWidth;
-        double dh = rmc.viewHeight;
+        double ar = rmc.aspectRatio();
         double vw, vh;
-        if (w * dh > h * dw) {
+
+        if (w / h > ar) {
+            vw = ar * h;
             vh = h;
-            vw = dw * h / dh;
         } else {
             vw = w;
-            vh = dh * w / dw;
+            vh = w / ar;
         }
         double left = (w - vw) / 2;
         double bottom = (h - vh) / 2;
 
-        mouse = new Vec2((Mouse.getX() - left) * dw / vw, (Mouse.getY() - bottom) * dh / vh);
-        mouseDelta = new Vec2(Mouse.getDX() * dw / vw, Mouse.getDY() * dh / vh);
+        mouse = new Vec2((Mouse.getX() - left) / vw, (Mouse.getY() - bottom) / vh).multiply(rmc.viewSize);
+        mouseDelta = new Vec2(Mouse.getDX() / vw, Mouse.getDY() / vh).multiply(rmc.viewSize);
     }
 
     public static int wheel() {

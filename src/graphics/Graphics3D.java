@@ -1,35 +1,36 @@
 package graphics;
 
-import core.Color4d;
-import core.Vec3;
+import graphics.data.Texture;
+import graphics.loading.FontContainer;
 import static org.lwjgl.opengl.GL11.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.TextureImpl;
+import util.Color4d;
+import util.Vec3;
 
-public abstract class Graphics {
+public abstract class Graphics3D {
 
     public static void drawLine(Vec3 start, Vec3 end) {
         drawLine(start, end, Color4d.BLACK);
     }
 
     public static void drawLine(Vec3 start, Vec3 end, Color4d color) {
-        glPushMatrix();
         glDisable(GL_TEXTURE_2D);
         glLineWidth(2);
         color.glColor();
         glBegin(GL_LINES);
         {
-            glVertex3d(start.x, start.y, start.z);
-            glVertex3d(end.x, end.y, end.z);
+            start.glVertex();
+            end.glVertex();
         }
         glEnd();
-        glPopMatrix();
     }
 
     public static void drawSprite(Texture s, Vec3 pos, double hor, double ver, double tilt, double angle, Color4d color) {
         glPushMatrix();
         glEnable(GL_TEXTURE_2D);
         s.bind();
+        double dir = Math.signum(hor * ver);
 
         color.glColor();
         glTranslated(pos.x, pos.y, pos.z);
@@ -38,16 +39,16 @@ public abstract class Graphics {
 
         glBegin(GL_QUADS);
         {
-            glNormal3d(0, 0, 1);
+            glNormal3d(0, 0, dir);
             glTexCoord2d(0, s.getHeight());
             glVertex3d(0, 0, 0);
-            glNormal3d(0, 0, 1);
+            glNormal3d(0, 0, dir);
             glTexCoord2d(s.getWidth(), s.getHeight());
             glVertex3d(hor, 0, 0);
-            glNormal3d(0, 0, 1);
+            glNormal3d(0, 0, dir);
             glTexCoord2d(s.getWidth(), 0);
             glVertex3d(hor, ver, 0);
-            glNormal3d(0, 0, 1);
+            glNormal3d(0, 0, dir);
             glTexCoord2d(0, 0);
             glVertex3d(0, ver, 0);
         }
@@ -67,11 +68,13 @@ public abstract class Graphics {
     public static void fillRect(Vec3 pos, double hor, double ver, double tilt, double angle, Color4d color) {
         glPushMatrix();
         glDisable(GL_TEXTURE_2D);
+        double dir = Math.signum(hor * ver);
+
         color.glColor();
         glTranslated(pos.x, pos.y, pos.z);
         glRotated(angle, 0, 0, 1);
         glRotated(tilt, 1, 0, 0);
-        double dir = Math.signum(hor * ver);
+
         glBegin(GL_QUADS);
         {
             glNormal3d(0, 0, dir);

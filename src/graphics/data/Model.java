@@ -1,6 +1,6 @@
-package graphics;
+package graphics.data;
 
-import core.Vec3;
+import util.Vec3;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

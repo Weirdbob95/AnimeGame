@@ -1,7 +1,7 @@
 package graphics;
 
-import core.Vec2;
-import core.Vec3;
+import util.Vec2;
+import util.Vec3;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -29,7 +29,9 @@ public abstract class Camera {
         glViewport(left, bottom, vw, vh);
     }
 
-    public static void setDisplayMode(int width, int height, boolean fullscreen) {
+    public static void setDisplayMode(Vec2 viewSize, boolean fullscreen) {
+        int width = (int) viewSize.x;
+        int height = (int) viewSize.y;
         // return if requested DisplayMode is already set
         if ((Display.getDisplayMode().getWidth() == width)
                 && (Display.getDisplayMode().getHeight() == height)
@@ -73,21 +75,26 @@ public abstract class Camera {
         }
     }
 
+    public static void setProjection2D(Vec2 LL, Vec2 UR) {
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(LL.x, UR.x, LL.y, UR.y, -1, 1);
+        glMatrixMode(GL_MODELVIEW);
+
+        glDisable(GL_ALPHA_TEST);
+        glDisable(GL_LIGHTING);
+    }
+
     public static void setProjection3D(double fov, double aspectRatio, Vec3 pos, Vec3 lookAt, Vec3 UP) {
-        glEnable(GL_LIGHTING);
-        glEnable(GL_ALPHA_TEST);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         gluPerspective((float) fov, (float) aspectRatio, 0.1f, 1000);
         gluLookAt((float) pos.x, (float) pos.y, (float) pos.z,
                 (float) lookAt.x, (float) lookAt.y, (float) lookAt.z,
                 (float) UP.x, (float) UP.y, (float) UP.z);
-
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(1, 1, 1, 1);
-
-        //3D
-        glClear(GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
+
+        glEnable(GL_LIGHTING);
+        glEnable(GL_ALPHA_TEST);
     }
 }

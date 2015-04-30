@@ -1,7 +1,9 @@
 package graphics;
 
+import graphics.data.Texture;
+import graphics.loading.SpriteContainer;
 import core.AbstractComponent;
-import core.Color4d;
+import util.Color4d;
 import java.io.IOException;
 import java.util.ArrayList;
 

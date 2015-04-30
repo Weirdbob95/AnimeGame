@@ -1,9 +1,9 @@
 package graphics;
 
 import core.AbstractSystem;
-import core.Color4d;
+import util.Color4d;
 import core.Main;
-import static core.Util.floatBuffer;
+import static util.Util.floatBuffer;
 import movement.PositionComponent;
 import movement.RotationComponent;
 import static org.lwjgl.opengl.GL11.*;
