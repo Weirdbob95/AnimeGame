@@ -1,11 +1,11 @@
 package graphics;
 
 import core.*;
-import static util.Util.floatBuffer;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import static org.lwjgl.opengl.GL11.*;
+import static util.Util.floatBuffer;
 
 public class RenderManagerSystem extends AbstractSystem {
 

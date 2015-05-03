@@ -1,15 +1,13 @@
 package core;
 
-import util.Vec3;
-import enemies.Enemy;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import level.Level;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import player.Player;
 
 public abstract class Main {
 
@@ -47,11 +45,12 @@ public abstract class Main {
         Keyboard.create();
         Mouse.create();
 
-        new Player(new Vec3(10, 10, 0));
-
-        for (int i = 0; i < 100; i++) {
-            new Enemy(Vec3.random(10).add(new Vec3(15, 15, 0)).setZ(0));
-        }
+//        new Player(new Vec3(10, 10, 0));
+//
+//        for (int i = 0; i < 100; i++) {
+//            new Enemy(Vec3.random(10).add(new Vec3(15, 15, 0)).setZ(0));
+//        }
+        new Level("level0");
     }
 
     public static void run() {

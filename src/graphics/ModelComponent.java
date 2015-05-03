@@ -4,6 +4,7 @@ import graphics.data.Animation;
 import graphics.data.Model;
 import graphics.loading.ModelContainer;
 import core.AbstractComponent;
+import graphics.data.Texture;
 import util.Color4d;
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ public class ModelComponent extends AbstractComponent {
     public String name;
     public Animation anim;
     public ArrayList<Model> modelList;
+    public Texture tex;
     public double animIndex;
     public double animSpeed;
     public boolean visible;

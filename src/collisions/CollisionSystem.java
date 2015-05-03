@@ -1,13 +1,11 @@
-package player;
+package collisions;
 
 import core.AbstractSystem;
 import core.Main;
-import core.MouseInput;
-import util.Vec3;
-import enemies.Enemy;
 import movement.PositionComponent;
 import movement.PreviousPositionComponent;
 import movement.VelocityComponent;
+import util.Vec3;
 
 public class CollisionSystem extends AbstractSystem {
 
@@ -26,25 +24,15 @@ public class CollisionSystem extends AbstractSystem {
     @Override
     public void update() {
         //Collide with units
-        for (Object o : Main.gameManager.elc.getComponentList(CollisionComponent.class).toArray()) {
-            CollisionComponent other = (CollisionComponent) o;
+        for (CollisionComponent other : Main.gameManager.elc.getComponentList(CollisionComponent.class)) {
             if (other != cc) {
                 Vec3 diff = other.pc.pos.subtract(pc.pos).setZ(0);
-                if (diff.lengthSquared() < 3 * cc.width * other.width) {//(sc.size + other.size) * (sc.size + other.size)) {
-                    if (cc.ae instanceof Player && other.ae instanceof Enemy) {
-                        if (MouseInput.isDown(1)) {
-                            other.ae.destroySelf();
-                        } else {
-                            cc.ae.getComponent(PlayerHealthComponent.class).damage++;
-                        }
-                    }
+                if (diff.lengthSquared() < 3 * cc.width * other.width) {
                     Vec3 diffN = diff.normalize();
-                    if (vc.vel.dot(diffN) >= 0) {
-                        Vec3 change = diff.subtract(diffN.multiply(cc.width + other.width)).multiply(.1);
-                        pc.pos = pc.pos.add(change);
-                        other.pc.pos = other.pc.pos.subtract(change);
-                        vc.vel = vc.vel.subtract(diffN.multiply(vc.vel.dot(diffN)));
-                    }
+                    Vec3 change = diff.subtract(diffN.multiply(cc.width + other.width)).multiply(.1);
+                    pc.pos = pc.pos.add(change);
+                    other.pc.pos = other.pc.pos.subtract(change);
+                    vc.vel = vc.vel.subtract(diffN.multiply(vc.vel.dot(diffN)));
                 }
             }
         }

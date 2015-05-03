@@ -1,13 +1,14 @@
 package enemies;
 
+import collisions.CollisionComponent;
+import collisions.CollisionSystem;
 import core.AbstractEntity;
-import util.Color4d;
-import util.Vec3;
-import graphics.data.Animation;
 import graphics.ModelComponent;
 import graphics.ModelSystem;
+import graphics.data.Animation;
 import movement.*;
-import player.*;
+import util.Color4d;
+import util.Vec3;
 
 public class Enemy extends AbstractEntity {
 
@@ -18,11 +19,11 @@ public class Enemy extends AbstractEntity {
         RotationComponent rc = add(new RotationComponent());
         PreviousPositionComponent ppc = add(new PreviousPositionComponent(pos));
         GravityComponent gc = add(new GravityComponent());
-        ModelComponent mc = add(new ModelComponent(Animation.RUN, .2, new Color4d(1, .3, 0)));
-        mc.animSpeed = .2 + Math.random() * .1;
-        CollisionComponent cc = add(new CollisionComponent(this, pc, 1, .5, false));
+        ModelComponent mc = add(new ModelComponent(Animation.RUN, .18, new Color4d(1, .3, 0)));
+        CollisionComponent cc = add(new CollisionComponent(this, pc, 1, .4));
+        EnemyHealthComponent ehc = add(new EnemyHealthComponent(50));
         //Systems
-        add(new AISystem(pc, vc, rc));
+        add(new EnemyControlSystem(pc, vc, rc, cc, mc));
         add(new VelocitySystem(pc, vc));
         add(new GravitySystem(vc, gc));
         add(new CollisionSystem(pc, vc, ppc, cc));

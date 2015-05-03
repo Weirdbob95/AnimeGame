@@ -2,7 +2,7 @@ package core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import player.CollisionComponent;
+import collisions.CollisionComponent;
 
 public class EntityListComponent extends AbstractComponent {
 

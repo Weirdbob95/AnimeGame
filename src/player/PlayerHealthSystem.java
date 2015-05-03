@@ -23,9 +23,13 @@ public class PlayerHealthSystem extends AbstractSystem {
     public void update() {
         phc.health -= phc.damage * .1;
         phc.damage *= .9;
-        double amt = phc.damage / 100;
+        double amt = phc.damage / 20;
 
         Graphics2D.fillRect(new Vec2(), Main.gameManager.rmc.viewSize, Color4d.RED.setA(amt));
+
+        if (phc.health <= 0) {
+            System.exit(0);
+        }
     }
 
 }

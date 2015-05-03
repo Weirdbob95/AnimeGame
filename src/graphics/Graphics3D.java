@@ -56,6 +56,21 @@ public abstract class Graphics3D {
         glPopMatrix();
     }
 
+    public static void drawSpriteFast(Texture s, Vec3 p1, Vec3 p2, Vec3 p3, Vec3 p4, Vec3 nor) {
+        nor.glNormal();
+        glTexCoord2d(0, s.getHeight());
+        p1.glVertex();
+        nor.glNormal();
+        glTexCoord2d(s.getWidth(), s.getHeight());
+        p2.glVertex();
+        nor.glNormal();
+        glTexCoord2d(s.getWidth(), 0);
+        p3.glVertex();
+        nor.glNormal();
+        glTexCoord2d(0, 0);
+        p4.glVertex();
+    }
+
     public static void drawText(String s, Vec3 pos) {
         drawText(s, "Default", pos, Color.black);
     }

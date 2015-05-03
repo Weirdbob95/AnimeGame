@@ -14,5 +14,4 @@ public class PositionComponent extends AbstractComponent {
     public PositionComponent(Vec3 pos) {
         this.pos = pos;
     }
-
 }

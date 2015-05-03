@@ -53,10 +53,6 @@ public class Vec3 {
         glNormal3d(x, y, z);
     }
 
-    public void glTexCoord() {
-        glTexCoord3d(x, y, z);
-    }
-
     public void glVertex() {
         glVertex3d(x, y, z);
     }
@@ -116,5 +112,9 @@ public class Vec3 {
     @Override
     public String toString() {
         return "(" + x + ", " + y + ", " + z + ")";
+    }
+
+    public Vec2 toVec2() {
+        return new Vec2(x, y);
     }
 }

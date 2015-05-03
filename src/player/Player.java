@@ -1,12 +1,14 @@
 package player;
 
+import collisions.CollisionComponent;
+import collisions.CollisionSystem;
 import core.AbstractEntity;
-import util.Color4d;
-import util.Vec3;
-import graphics.data.Animation;
 import graphics.ModelComponent;
 import graphics.ModelSystem;
+import graphics.data.Animation;
 import movement.*;
+import util.Color4d;
+import util.Vec3;
 
 public class Player extends AbstractEntity {
 
@@ -17,8 +19,8 @@ public class Player extends AbstractEntity {
         RotationComponent rc = add(new RotationComponent());
         PreviousPositionComponent ppc = add(new PreviousPositionComponent(pos));
         GravityComponent gc = add(new GravityComponent());
-        ModelComponent mc = add(new ModelComponent(Animation.RUN, .22, new Color4d(.2, .4, 1)));
-        CollisionComponent cc = add(new CollisionComponent(this, pc, 1, .5, false));
+        ModelComponent mc = add(new ModelComponent(Animation.RUN, .2, new Color4d(.2, .4, 1)));
+        CollisionComponent cc = add(new CollisionComponent(this, pc, 1, .4));
         PlayerHealthComponent hc = add(new PlayerHealthComponent(100));
         //Systems
         add(new PlayerControlSystem(pc, vc, rc, cc, mc));

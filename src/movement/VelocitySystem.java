@@ -19,7 +19,7 @@ public class VelocitySystem extends AbstractSystem {
 
     @Override
     public void update() {
-        pc.pos = pc.pos.add(vc.vel);
+        pc.pos = pc.pos.add(vc.vel); 
     }
 
 }

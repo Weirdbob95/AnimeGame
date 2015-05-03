@@ -1,6 +1,6 @@
 package util;
 
-import static org.lwjgl.opengl.GL11.glVertex2d;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Vec2 {
 
@@ -48,6 +48,10 @@ public class Vec2 {
             return x == v.x && y == v.y;
         }
         return false;
+    }
+
+    public void glTexCoord() {
+        glTexCoord2d(x, y);
     }
 
     public void glVertex() {
@@ -125,5 +129,9 @@ public class Vec2 {
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";
+    }
+
+    public Vec3 toVec3() {
+        return new Vec3(x, y, 0);
     }
 }

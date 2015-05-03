@@ -4,7 +4,6 @@ import graphics.data.Texture;
 import graphics.loading.SpriteContainer;
 import core.AbstractComponent;
 import util.Color4d;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class SpriteComponent extends AbstractComponent {
@@ -44,10 +43,6 @@ public class SpriteComponent extends AbstractComponent {
 
     public void setSprite(String name, int x, int y) {
         this.name = name;
-        try {
-            textureArray = SpriteContainer.loadSprite(name, x, y);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        textureArray = SpriteContainer.loadSprite(name, x, y);
     }
 }

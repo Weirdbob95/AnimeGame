@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 public abstract class ModelContainer {
 
-    public static HashMap<String, Model> modelMap = new HashMap();
-    public static String path = "models/";
-    public static String type = ".obj";
+    private static HashMap<String, Model> modelMap = new HashMap();
+    private static String path = "models/";
+    private static String type = ".obj";
 
     public static Model loadModel(String name) {
         if (modelMap.containsKey(name)) {

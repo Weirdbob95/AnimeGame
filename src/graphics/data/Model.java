@@ -1,18 +1,19 @@
 package graphics.data;
 
-import util.Vec3;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import static org.lwjgl.opengl.GL11.*;
+import util.Vec2;
+import util.Vec3;
 
 public class Model {
 
     private final ArrayList<Vec3> vertices = new ArrayList(); // Vertex Coordinates
     private final ArrayList<Vec3> vertexNormals = new ArrayList(); // Vertex Coordinates Normals
-    private final ArrayList<Vec3> vertexTex = new ArrayList(); // Vertex Coordinates Textures
+    private final ArrayList<Vec2> vertexTex = new ArrayList(); // Vertex Coordinates Textures
     private final ArrayList<int[]> faces = new ArrayList(); // Array of Faces (vertex sets)
     private final ArrayList<int[]> facestexs = new ArrayList(); // Array of of Faces textures
     private final ArrayList<int[]> facesnorms = new ArrayList(); // Array of Faces normals
@@ -96,7 +97,7 @@ public class Model {
                     }
                     if (newline.charAt(0) == 'v' && newline.charAt(1) == 't') {
                         String[] coordstext = newline.split("\\s+");
-                        Vec3 coords = new Vec3(Double.valueOf(coordstext[3]), Double.valueOf(coordstext[1]), Double.valueOf(coordstext[2]));
+                        Vec2 coords = new Vec2(Double.valueOf(coordstext[1]), Double.valueOf(coordstext[2]));
                         vertexTex.add(coords);
                     }
                     if (newline.charAt(0) == 'v' && newline.charAt(1) == 'n') {
