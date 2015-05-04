@@ -1,12 +1,12 @@
 package graphics;
 
+import core.AbstractComponent;
 import graphics.data.Animation;
 import graphics.data.Model;
-import graphics.loading.ModelContainer;
-import core.AbstractComponent;
 import graphics.data.Texture;
-import util.Color4d;
+import graphics.loading.ModelContainer;
 import java.util.ArrayList;
+import util.Color4d;
 
 public class ModelComponent extends AbstractComponent {
 
@@ -43,23 +43,30 @@ public class ModelComponent extends AbstractComponent {
         return animIndex >= modelList.size();
     }
 
+    public void attemptAnim(Animation anim) {
+        if (animComplete() || this.anim.getPriority() <= anim.getPriority()) {
+            setAnim(anim);
+        }
+    }
+
     public Model getModel() {
         return modelList.get((int) animIndex % modelList.size());
     }
 
-    public void setAnim(Animation anim) {
+    private void setAnim(Animation anim) {
         if (this.anim == anim) {
+            animIndex = animIndex % modelList.size();
             return;
         }
-        name = anim.name;
+        name = anim.getName();
         this.anim = anim;
         animIndex = 0;
-        animSpeed = anim.speed;
+        animSpeed = anim.getSpeed();
         modelList.clear();
-        if (anim.length == -1) {
+        if (anim.getLength() == -1) {
             modelList.add(ModelContainer.loadModel(name));
         } else {
-            for (int i = 1; i <= anim.length; i++) {
+            for (int i = 1; i <= anim.getLength(); i++) {
                 modelList.add(ModelContainer.loadModel(name + "/" + i));
             }
         }

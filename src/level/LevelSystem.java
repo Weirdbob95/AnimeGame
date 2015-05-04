@@ -5,6 +5,7 @@ import static graphics.Graphics3D.drawSpriteFast;
 import graphics.data.Texture;
 import static graphics.loading.SpriteContainer.loadSprite;
 import static org.lwjgl.opengl.GL11.*;
+import shapes.Polygon;
 import util.Color4d;
 import util.Util;
 import util.Vec2;
@@ -20,9 +21,11 @@ public class LevelSystem extends AbstractSystem {
 
     @Override
     public void update() {
-        double bottom = Util.screenPos(new Vec2(0, -1)).y;
-        Vec3 UL = Util.screenPos(new Vec2(-1, 1));
-        Vec3 UR = Util.screenPos(new Vec2(1, 1));
+//        double bottom = Util.screenPos(new Vec2(0, -1)).y;
+//        Vec3 UL = Util.screenPos(new Vec2(-1, 1));
+//        Vec3 UR = Util.screenPos(new Vec2(1, 1));
+        Polygon screen = new Polygon(new Vec2[]{Util.screenPos(new Vec2(0, 0)).toVec2(), Util.screenPos(new Vec2(1, 0)).toVec2(),
+            Util.screenPos(new Vec2(1, 1)).toVec2(), Util.screenPos(new Vec2(0, 1)).toVec2()});
 
         glEnable(GL_TEXTURE_2D);
 
@@ -36,7 +39,7 @@ public class LevelSystem extends AbstractSystem {
             for (int i = 0; i < lc.width; i++) {
                 for (int j = 0; j < lc.height; j++) {
                     Tile t = lc.tileGrid[i][j];
-                    if (t.tex != tex || j < bottom || j > UL.y + .5 || i < UL.x || i > UR.x + .5) {
+                    if (t.tex != tex || !screen.aabb.contains(i, j, 2)) {
                         continue;
                     }
                     new Color4d(.5 + t.height / 16, .5 + t.height / 16, .5 + t.height / 16).glColor();

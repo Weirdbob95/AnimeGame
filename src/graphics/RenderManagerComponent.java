@@ -13,10 +13,10 @@ public class RenderManagerComponent extends AbstractComponent {
     public static final Vec3 UP = new Vec3(0, 0, 1);
 
     public RenderManagerComponent() {
-//        viewSize = new Vec2(800, 600);
-//        startFullscreen = false;
-        viewSize = new Vec2(1920, 1080);
-        startFullscreen = true;
+        viewSize = new Vec2(800, 600);
+        startFullscreen = false;
+//        viewSize = new Vec2(1920, 1080);
+//        startFullscreen = true;
 
         pos = new Vec3(25, 15, 5);
         lookAt = new Vec3(0, 1, 5);

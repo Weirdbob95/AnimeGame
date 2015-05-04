@@ -3,6 +3,7 @@ package collisions;
 import core.AbstractComponent;
 import core.AbstractEntity;
 import core.Main;
+import java.util.HashSet;
 import level.Level;
 import level.LevelComponent;
 import movement.PositionComponent;
@@ -14,12 +15,15 @@ public class CollisionComponent extends AbstractComponent {
     public PositionComponent pc;
     public double height;
     public double width;
+    public HashSet<CollisionComponent> collisions;
+    public boolean xHit, yHit, zHit;
 
     public CollisionComponent(AbstractEntity ae, PositionComponent pc, double height, double width) {
         this.ae = ae;
         this.pc = pc;
         this.height = height;
         this.width = width;
+        collisions = new HashSet();
     }
 
     public boolean onGround() {
