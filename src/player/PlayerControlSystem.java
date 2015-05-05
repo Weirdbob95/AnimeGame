@@ -13,7 +13,11 @@ import static org.lwjgl.input.Keyboard.KEY_SPACE;
 import static org.lwjgl.opengl.GL11.*;
 import static player.PlayerAnimation.*;
 import shapes.Polygon;
-import util.*;
+import util.Color4d;
+import util.Util;
+import util.Vec2;
+import util.Vec3;
+import util.Vec3Polar;
 
 public class PlayerControlSystem extends AbstractSystem {
 
@@ -22,13 +26,15 @@ public class PlayerControlSystem extends AbstractSystem {
     private RotationComponent rc;
     private CollisionComponent cc;
     private ModelComponent mc;
+    private StaminaComponent sc;
 
-    public PlayerControlSystem(PositionComponent pc, VelocityComponent vc, RotationComponent rc, CollisionComponent cc, ModelComponent mc) {
+    public PlayerControlSystem(PositionComponent pc, VelocityComponent vc, RotationComponent rc, CollisionComponent cc, ModelComponent mc, StaminaComponent sc) {
         this.pc = pc;
         this.vc = vc;
         this.rc = rc;
         this.cc = cc;
         this.mc = mc;
+        this.sc = sc;
     }
 
     @Override
@@ -73,6 +79,8 @@ public class PlayerControlSystem extends AbstractSystem {
                             ehc.health -= 20;
 
                             cc.ae.getComponent(ModelComponent.class).attemptAnim(EnemyAnimation.FLINCH);
+
+                            cc.ae.getComponent(VelocityComponent.class).vel = cc.pc.pos.subtract(pc.pos).setLength(.1);
 
                             if (ehc.health <= 0) {
                                 cc.ae.destroySelf();
@@ -141,9 +149,12 @@ public class PlayerControlSystem extends AbstractSystem {
 //                    }
 //                }
                 if (MouseInput.isDown(1)) {
-                    Vec3 mousePos = Util.mousePos();
-                    if (mousePos != null) {
-                        vc.vel = mousePos.subtract(pc.pos).setZ(0).setLength(.5);
+                    if (sc.stamina >= .5) {
+                        Vec3 mousePos = Util.mousePos();
+                        if (mousePos != null) {
+                            sc.stamina -= .5;
+                            vc.vel = mousePos.subtract(pc.pos).setZ(0).setLength(.5);
+                        }
                     }
                 }
 

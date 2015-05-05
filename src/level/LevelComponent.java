@@ -45,10 +45,10 @@ public class LevelComponent extends AbstractComponent {
                 return new Tile(x, y, 1);
             case 0xFFFFFFFF:
                 return new Tile(x, y, 0);
-            case 0xFFFF8000:
+            case 0xFFFF7F27:
                 new Enemy(new Vec3(x + .5, y + .5, 0));
                 return new Tile(x, y, 0);
-            case 0xFF0080FF:
+            case 0xFF00A2E8:
                 new Player(new Vec3(x + .5, y + .5, 0));
                 return new Tile(x, y, 0);
         }

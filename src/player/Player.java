@@ -21,8 +21,9 @@ public class Player extends AbstractEntity {
         ModelComponent mc = add(new ModelComponent(PlayerAnimation.RUN, .2, new Color4d(.2, .4, 1)));
         CollisionComponent cc = add(new CollisionComponent(this, pc, 1, .4));
         PlayerHealthComponent hc = add(new PlayerHealthComponent(100));
+        StaminaComponent sc = add(new StaminaComponent(100));
         //Systems
-        add(new PlayerControlSystem(pc, vc, rc, cc, mc));
+        add(new PlayerControlSystem(pc, vc, rc, cc, mc, sc));
         add(new VelocitySystem(pc, vc));
         add(new GravitySystem(vc, gc));
         add(new CollisionSystem(pc, vc, ppc, cc));
@@ -30,5 +31,6 @@ public class Player extends AbstractEntity {
         add(new ModelSystem(pc, rc, mc));
         add(new PreviousPositionSystem(pc, ppc));
         add(new PlayerHealthSystem(hc));
+        add(new StaminaSystem(sc));
     }
 }
