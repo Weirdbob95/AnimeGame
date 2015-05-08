@@ -60,14 +60,16 @@ public class PlayerControlSystem extends AbstractSystem {
                     if (mc.animIndex == 0) {
                         Vec3 mousePos = Util.mousePos();
                         if (mousePos != null) {
-                            vc.vel = new Vec3Polar(1 - 1 * Math.pow(.98, MouseInput.getTime(0)), rc.rot, 0).toRect().setZ(vc.vel.z);
+//                            vc.vel = new Vec3Polar(1 - 1 * Math.pow(.98, MouseInput.getTime(0)), rc.rot, 0).toRect().setZ(vc.vel.z);
+                            vc.vel = Util.mousePos().subtract(pc.pos).setZ(0).setLength(.2);
+                            rc.rot = vc.vel.direction();
                         }
                     }
                 } else {
                     vc.vel = new Vec3(0, 0, vc.vel.z);
                 }
                 if ((int) mc.animIndex == 5) {
-                    vc.vel = new Vec3(0, 0, vc.vel.z);
+                    //vc.vel = new Vec3(0, 0, vc.vel.z);
                     Vec2[] shape = new Vec2[7];
                     shape[0] = pc.pos.toVec2();
                     for (int i = 1; i < 7; i++) {
@@ -98,7 +100,7 @@ public class PlayerControlSystem extends AbstractSystem {
                 break;
             case CHARGING:
                 //Mouse move
-                if (MouseInput.isDown(0)) {
+                if (MouseInput.getTime(0) > 10) {
                     Vec3 mousePos = Util.mousePos();
                     if (mousePos != null) {
                         vc.vel = mousePos.subtract(pc.pos).setZ(0).setLength(.1).setZ(vc.vel.z);

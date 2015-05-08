@@ -12,7 +12,7 @@ import org.lwjgl.opengl.Display;
 public abstract class Main {
 
     public static void main(String[] args) throws IOException {
-        System.setProperty("org.lwjgl.librarypath", new File("../../LWJGL/native/windows").getAbsolutePath());
+        System.setProperty("org.lwjgl.librarypath", new File("LWJGL/native/windows").getAbsolutePath());
         try {
             init();
             run();
@@ -44,6 +44,7 @@ public abstract class Main {
         gameManager = new GameManager();
         Keyboard.create();
         Mouse.create();
+        Mouse.setGrabbed(true);
 
 //        new Player(new Vec3(10, 10, 0));
 //
