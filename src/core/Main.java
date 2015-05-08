@@ -12,7 +12,7 @@ import org.lwjgl.opengl.Display;
 public abstract class Main {
 
     public static void main(String[] args) throws IOException {
-        System.setProperty("org.lwjgl.librarypath", new File("LWJGL/native/windows").getAbsolutePath());
+        System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
         try {
             init();
             run();
