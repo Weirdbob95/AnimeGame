@@ -12,12 +12,14 @@ public class StateComponent extends AbstractComponent {
         this.e = e;
         setState(c);
     }
-    
+
     public void setState(Class<? extends State> c) {
-        try {
-            state = c.getConstructor(AbstractEntity.class).newInstance(e);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (!c.isInstance(state)) {
+            try {
+                state = c.getConstructor(AbstractEntity.class, StateComponent.class).newInstance(e, this);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }

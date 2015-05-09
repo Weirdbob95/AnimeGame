@@ -23,14 +23,14 @@ public class CameraSystem extends AbstractSystem {
     @Override
     public void update() {
         cc.t -= MouseInput.mouseDelta().x / 500;
-        cc.p += MouseInput.mouseDelta().y / 500;
-        if (cc.p > Math.PI / 2) {
-            cc.p = Math.PI / 2;
+        cc.p += MouseInput.mouseDelta().y / 1000;
+        if (cc.p > 1.5) {
+            cc.p = 1.5;
         }
-        if (cc.p < -Math.PI / 2) {
-            cc.p = -Math.PI / 2;
+        if (cc.p < -1.5) {
+            cc.p = -1.5;
         }
-        Main.gameManager.rmc.pos = pc.pos.add(new Vec3(0, 0, 1)).add(new Vec3Polar(-5, cc.t, cc.p).toRect());
-        Main.gameManager.rmc.lookAt = pc.pos.add(new Vec3(0, 0, 1));
+        Main.gameManager.rmc.pos = pc.pos.add(new Vec3(0, 0, 2)).add(new Vec3Polar(-5, cc.t, cc.p).toRect());
+        Main.gameManager.rmc.lookAt = pc.pos.add(new Vec3(0, 0, 2));
     }
 }

@@ -27,7 +27,7 @@ public class CollisionComponent extends AbstractComponent {
     }
 
     public boolean onGround() {
-        return open(pc.pos.add(new Vec3(0, 0, -.01)));
+        return !open(pc.pos.add(new Vec3(0, 0, -.01)));
     }
 
     public boolean open(Vec3 pos) {

@@ -1,12 +1,12 @@
 package graphics;
 
 import core.AbstractSystem;
-import util.Color4d;
 import core.Main;
-import static util.Util.floatBuffer;
 import movement.PositionComponent;
 import movement.RotationComponent;
 import static org.lwjgl.opengl.GL11.*;
+import util.Color4d;
+import static util.Util.floatBuffer;
 
 public class ModelSystem extends AbstractSystem {
 
