@@ -39,6 +39,12 @@ public class Model {
         } catch (FileNotFoundException ex) {
             System.out.println("Could not load model: " + name);
         }
+        for (int i = 0; i < vertices.size(); i++) {
+            int ocr = 0;
+            for (int j = 0; i < faces.size(); j++) {
+                
+            }
+        }
     }
 
     private void cleanup() {
@@ -148,37 +154,50 @@ public class Model {
         objectlist = glGenLists(1);
         glNewList(objectlist, GL_COMPILE);
 
+        glBegin(GL_TRIANGLES);
         for (int i = 0; i < faces.size(); i++) {
-            int[] tempfaces = faces.get(i);
-            int[] tempfacesnorms = facesnorms.get(i);
-            int[] tempfacestexs = facestexs.get(i);
-            //// Quad Begin Header ////
-            int polytype;
-            switch (tempfaces.length) {
-                case 3:
-                    polytype = GL_TRIANGLES;
-                    break;
-                case 4:
-                    polytype = GL_QUADS;
-                    break;
-                default:
-                    polytype = GL_POLYGON;
-            }
-            glBegin(polytype);
-            ////////////////////////////
-            for (int j = 0; j < tempfaces.length; j++) {
-                if (tempfacesnorms[j] >= 0) {
-                    vertexNormals.get(tempfacesnorms[j]).glNormal();
+            if (faces.get(i).length == 3) {
+                for (int j = 0; j < faces.get(i).length; j++) {
+                    if (facesnorms.get(i)[j] >= 0) {
+                        vertexNormals.get(facesnorms.get(i)[j]).glNormal();
+                    }
+                    if (facestexs.get(i)[j] >= 0) {
+                        vertexTex.get(facestexs.get(i)[j]).glTexCoord();
+                    }
+                    vertices.get(faces.get(i)[j]).glVertex();
                 }
-
-                if (tempfacestexs[j] >= 0) {
-                    vertexTex.get(tempfacestexs[j]).glTexCoord();
-                }
-                vertices.get(tempfaces[j]).glVertex();
             }
-            //// Quad End Footer /////
-            glEnd();
-            ///////////////////////////
+        }
+        glEnd();
+        glBegin(GL_QUADS);
+        for (int i = 0; i < faces.size(); i++) {
+            if (faces.get(i).length == 4) {
+                for (int j = 0; j < faces.get(i).length; j++) {
+                    if (facesnorms.get(i)[j] >= 0) {
+                        vertexNormals.get(facesnorms.get(i)[j]).glNormal();
+                    }
+                    if (facestexs.get(i)[j] >= 0) {
+                        vertexTex.get(facestexs.get(i)[j]).glTexCoord();
+                    }
+                    vertices.get(faces.get(i)[j]).glVertex();
+                }
+            }
+        }
+        glEnd();
+        for (int i = 0; i < faces.size(); i++) {
+            if (faces.get(i).length > 4) {
+                glBegin(GL_POLYGON);
+                for (int j = 0; j < faces.get(i).length; j++) {
+                    if (facesnorms.get(i)[j] >= 0) {
+                        vertexNormals.get(facesnorms.get(i)[j]).glNormal();
+                    }
+                    if (facestexs.get(i)[j] >= 0) {
+                        vertexTex.get(facestexs.get(i)[j]).glTexCoord();
+                    }
+                    vertices.get(faces.get(i)[j]).glVertex();
+                }
+                glEnd();
+            }
         }
         glEndList();
     }

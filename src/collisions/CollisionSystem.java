@@ -5,6 +5,7 @@ import core.Main;
 import movement.PositionComponent;
 import movement.PreviousPositionComponent;
 import movement.VelocityComponent;
+import util.Util;
 import util.Vec3;
 
 public class CollisionSystem extends AbstractSystem {
@@ -24,7 +25,7 @@ public class CollisionSystem extends AbstractSystem {
     @Override
     public void update() {
         cc.collisions.clear();
-        cc.xHit = cc.yHit = cc.zHit = false;
+        cc.xHit = cc.yHit = cc.zHit = 0;
         //Collide with units
         for (CollisionComponent other : Main.gameManager.elc.getComponentList(CollisionComponent.class)) {
             if (other != cc) {
@@ -51,7 +52,7 @@ public class CollisionSystem extends AbstractSystem {
                 if (cc.open(pc.pos.add(new Vec3(diff.x * .1, 0, 0)))) {
                     pc.pos = pc.pos.add(new Vec3(diff.x * .1, 0, 0));
                 } else {
-                    cc.xHit = true;
+                    cc.xHit = (int) Util.sign(diff.x);
                     vc.vel = vc.vel.setX(0);
                     break;
                 }
@@ -60,7 +61,7 @@ public class CollisionSystem extends AbstractSystem {
                 if (cc.open(pc.pos.add(new Vec3(0, diff.y * .1, 0)))) {
                     pc.pos = pc.pos.add(new Vec3(0, diff.y * .1, 0));
                 } else {
-                    cc.yHit = true;
+                    cc.yHit = (int) Util.sign(diff.y);
                     vc.vel = vc.vel.setY(0);
                     break;
                 }
@@ -69,7 +70,7 @@ public class CollisionSystem extends AbstractSystem {
                 if (cc.open(pc.pos.add(new Vec3(0, 0, diff.z * .1)))) {
                     pc.pos = pc.pos.add(new Vec3(0, 0, diff.z * .1));
                 } else {
-                    cc.zHit = true;
+                    cc.zHit = (int) Util.sign(diff.z);
                     vc.vel = vc.vel.setZ(0);
                     break;
                 }

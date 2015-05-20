@@ -10,6 +10,17 @@ public abstract class Keys {
     private static ArrayList<Integer> pressed = new ArrayList();
     private static ArrayList<Integer> released = new ArrayList();
     private static HashMap<Integer, Integer> time = new HashMap();
+    
+    public static boolean anyPressed() {
+        return !pressed.isEmpty();
+    }
+
+    public static int getTime(int button) {
+        if (!time.containsKey(button)) {
+            return 0;
+        }
+        return time.get(button);
+    }
 
     public static boolean isDown(int key) {
         return down.contains(key);
@@ -21,13 +32,6 @@ public abstract class Keys {
 
     public static boolean isReleased(int key) {
         return released.contains(key);
-    }
-
-    public static int getTime(int button) {
-        if (!time.containsKey(button)) {
-            return 0;
-        }
-        return time.get(button);
     }
 
     public static void update() {

@@ -5,11 +5,12 @@ import collisions.CollisionSystem;
 import core.AbstractEntity;
 import graphics.ModelComponent;
 import graphics.ModelSystem;
+import graphics.loading.SpriteContainer;
 import movement.*;
+import states.PlayerWalkingState;
 import states.StateComponent;
 import states.StateSystem;
-import states.PlayerWalkingState;
-import util.Color4d;
+import static util.Color4d.WHITE;
 import util.Vec3;
 
 public class Player extends AbstractEntity {
@@ -21,10 +22,11 @@ public class Player extends AbstractEntity {
         RotationComponent rc = add(new RotationComponent());
         PreviousPositionComponent ppc = add(new PreviousPositionComponent(pos));
         GravityComponent gc = add(new GravityComponent());
-        ModelComponent mc = add(new ModelComponent("player_actionpose", .2, new Color4d(.2, .4, 1)));
+        ModelComponent mc = add(new ModelComponent("pose", .15, WHITE));// new Color4d(.2, .4, 1)));
+        mc.tex = SpriteContainer.loadSprite("tex_test3");
         CollisionComponent cc = add(new CollisionComponent(this, pc, 1, .4));
-        PlayerHealthComponent hc = add(new PlayerHealthComponent(100));
-        StaminaComponent stc = add(new StaminaComponent(100));
+        PlayerHealthComponent hc = add(new PlayerHealthComponent(30));
+        StaminaComponent stc = add(new StaminaComponent(100, .2));
         CameraComponent cac = add(new CameraComponent());
         StateComponent sc = add(new StateComponent(this, PlayerWalkingState.class));
         //Systems

@@ -36,4 +36,14 @@ public abstract class Util {
         }
         return rmc.pos.add(toMouse.multiply(-rmc.pos.z / toMouse.z));
     }
+
+    public static int sign(double d) {
+        if (d == 0) {
+            return 0;
+        }
+        if (d > 0) {
+            return 1;
+        }
+        return -1;
+    }
 }

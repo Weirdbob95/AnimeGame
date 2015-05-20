@@ -16,7 +16,7 @@ public class CollisionComponent extends AbstractComponent {
     public double height;
     public double width;
     public HashSet<CollisionComponent> collisions;
-    public boolean xHit, yHit, zHit;
+    public int xHit, yHit, zHit;
 
     public CollisionComponent(AbstractEntity ae, PositionComponent pc, double height, double width) {
         this.ae = ae;

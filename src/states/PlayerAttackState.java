@@ -3,6 +3,7 @@ package states;
 import collisions.CollisionComponent;
 import collisions.CollisionUtil;
 import core.AbstractEntity;
+import core.Keys;
 import core.MouseInput;
 import enemies.Enemy;
 import enemies.EnemyHealthComponent;
@@ -35,7 +36,7 @@ public class PlayerAttackState extends State {
         cac = e.getComponent(CameraComponent.class);
 
         rc.rot = cac.t;
-        mc.setAnim("attack", 9);
+        mc.setAnim("attack1", 4);
         mc.animSpeed = .5;
 
         vc.vel = new Vec3Polar(.2, rc.rot, 0).toRect();
@@ -49,7 +50,9 @@ public class PlayerAttackState extends State {
         }
 
         //Damage enemies
-        if ((int) mc.animIndex == 5) {
+        if ((int) mc.animIndex == 4) {
+            Vec3[] slash1 = new Vec3[]{new Vec3()};
+            Vec3[] slash2 = new Vec3[]{};
             Vec2[] shape = new Vec2[7];
             shape[0] = pc.pos.toVec2();
             for (int i = 1; i < 7; i++) {
@@ -82,14 +85,6 @@ public class PlayerAttackState extends State {
             repeat = true;
         }
 
-//        if ((int) mc.animIndex == 3 && repeat) {
-//            mc.animSpeed = Math.abs(mc.animSpeed);
-//            repeat = false;
-//        }
-//        if ((int) mc.animIndex == 7 && repeat) {
-//            mc.animSpeed = -Math.abs(mc.animSpeed);
-//            vc.vel = new Vec3();
-//        }
         if ((int) mc.animIndex == 8 && repeat) {
             mc.animIndex = 0;
             rc.rot = cac.t;
@@ -98,7 +93,7 @@ public class PlayerAttackState extends State {
         }
 
         //End anim
-        if (mc.animComplete()) {
+        if (mc.animComplete() && Keys.anyPressed()) {
             sc.setState(PlayerWalkingState.class);
         }
     }

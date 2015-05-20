@@ -23,7 +23,7 @@ public class ModelComponent extends AbstractComponent {
         modelList = new ArrayList();
         setAnim(name, length);
         visible = true;
-        shadow = true;
+        shadow = false;
         this.scale = scale;
         this.color = color;
     }
@@ -32,7 +32,7 @@ public class ModelComponent extends AbstractComponent {
         modelList = new ArrayList();
         setModel(name);
         visible = true;
-        shadow = true;
+        shadow = false;
         this.scale = scale;
         this.color = color;
     }

@@ -1,4 +1,4 @@
-package player;
+ package player;
 
 import core.AbstractSystem;
 import core.Main;
@@ -22,8 +22,9 @@ public class CameraSystem extends AbstractSystem {
 
     @Override
     public void update() {
-        cc.t -= MouseInput.mouseDelta().x / 500;
-        cc.p += MouseInput.mouseDelta().y / 1000;
+        cc.t -= MouseInput.mouseDelta().x / 1000;
+        cc.p += MouseInput.mouseDelta().y / 1500;
+        cc.p += (-.5 - cc.p) / 1000;
         if (cc.p > 1.5) {
             cc.p = 1.5;
         }

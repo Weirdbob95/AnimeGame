@@ -21,7 +21,7 @@ public class Enemy extends AbstractEntity {
         RotationComponent rc = add(new RotationComponent());
         PreviousPositionComponent ppc = add(new PreviousPositionComponent(pos));
         GravityComponent gc = add(new GravityComponent());
-        ModelComponent mc = add(new ModelComponent("player_actionpose", .18, new Color4d(1, .3, 0)));
+        ModelComponent mc = add(new ModelComponent("player_actionpose", .14, new Color4d(1, .3, 0)));
         CollisionComponent cc = add(new CollisionComponent(this, pc, 1, .4));
         EnemyHealthComponent ehc = add(new EnemyHealthComponent(50));
         EnemyPathingComponent epc = add(new EnemyPathingComponent(pos));
