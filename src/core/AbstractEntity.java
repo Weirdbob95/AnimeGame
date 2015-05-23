@@ -7,8 +7,10 @@ public abstract class AbstractEntity {
 
     ArrayList<AbstractComponent> componentList;
     ArrayList<AbstractSystem> systemList;
+    public long id;
 
     public AbstractEntity() {
+        id = (long) (Long.MAX_VALUE * Math.random());
         componentList = new ArrayList();
         systemList = new ArrayList();
         if (!(this instanceof GameManager)) {

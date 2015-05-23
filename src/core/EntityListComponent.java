@@ -1,8 +1,8 @@
 package core;
 
+import collisions.CollisionComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
-import collisions.CollisionComponent;
 
 public class EntityListComponent extends AbstractComponent {
 
@@ -26,6 +26,21 @@ public class EntityListComponent extends AbstractComponent {
         if (map.keySet().contains(c.getClass())) {
             map.get(c.getClass()).add(c);
         }
+    }
+
+    public <E extends AbstractComponent> ArrayList<E> getComponentList(Class<E> c) {
+        if (map.keySet().contains(c)) {
+            return (ArrayList<E>) map.get(c);
+        }
+        ArrayList<E> r = new ArrayList();
+        for (AbstractEntity e : list) {
+            for (AbstractComponent ac : e.componentList) {
+                if (c.isInstance(ac)) {
+                    r.add((E) ac);
+                }
+            }
+        }
+        return r;
     }
 
     public <E extends AbstractEntity> E getEntity(Class<E> c) {
@@ -53,19 +68,13 @@ public class EntityListComponent extends AbstractComponent {
         return r;
     }
 
-    public <E extends AbstractComponent> ArrayList<E> getComponentList(Class<E> c) {
-        if (map.keySet().contains(c)) {
-            return (ArrayList<E>) map.get(c);
-        }
-        ArrayList<E> r = new ArrayList();
+    public AbstractEntity getId(long id) {
         for (AbstractEntity e : list) {
-            for (AbstractComponent ac : e.componentList) {
-                if (c.isInstance(ac)) {
-                    r.add((E) ac);
-                }
+            if (e.id == id) {
+                return e;
             }
         }
-        return r;
+        return null;
     }
 
     public void remove(AbstractEntity e) {
