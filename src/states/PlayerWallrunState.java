@@ -118,11 +118,13 @@ public class PlayerWallrunState extends State {
         }
 
         //Rotation and animation
-        mc.setModel("player_actionpose");
+        mc.setAnim("player_run", 10);
+        //mc.setModel("player_actionpose");
         if (onWall != -1) {
             rc.rot = Math.PI + onWall;
         } else if (!vc.vel.setZ(0).equals(new Vec3())) {
             rc.rot = vc.vel.direction();
+            
         }
     }
 }

@@ -23,7 +23,7 @@ public class Player extends AbstractEntity {
         PreviousPositionComponent ppc = add(new PreviousPositionComponent(pos));
         GravityComponent gc = add(new GravityComponent());
         ModelComponent mc = add(new ModelComponent("pose", .15, WHITE));// new Color4d(.2, .4, 1)));
-        mc.tex = SpriteContainer.loadSprite("tex_test3");
+        mc.tex = SpriteContainer.loadSprite("tex_player");
         CollisionComponent cc = add(new CollisionComponent(this, pc, 1, .4));
         PlayerHealthComponent hc = add(new PlayerHealthComponent(30));
         StaminaComponent stc = add(new StaminaComponent(100, .2));

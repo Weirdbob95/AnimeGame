@@ -121,12 +121,12 @@ public class PlayerWalkingState extends State {
         if (cc.onGround()) {
             if (!vc.vel.setZ(0).equals(new Vec3())) {
                 rc.rot = vc.vel.direction();
-                mc.setAnim("run", 10);
+                mc.setAnim("player_run", 10);
             } else {
-                mc.setModel("pose");
+                mc.setModel("player_actionpose");
             }
         } else {
-            mc.setModel("jump");
+            mc.setModel("player_run/1");
             if (!vc.vel.setZ(0).equals(new Vec3())) {
                 rc.rot = vc.vel.direction();
             }

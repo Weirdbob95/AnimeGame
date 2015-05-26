@@ -25,7 +25,9 @@ public class PlayerAttackState extends State {
     private ModelComponent mc;
     private CameraComponent cac;
     public boolean repeat;
-
+    public boolean attackSide;
+    
+    double attackSpeed=2;
     public PlayerAttackState(AbstractEntity e, StateComponent sc) {
         super(e, sc);
         pc = e.getComponent(PositionComponent.class);
@@ -36,10 +38,11 @@ public class PlayerAttackState extends State {
         cac = e.getComponent(CameraComponent.class);
 
         rc.rot = cac.t;
-        mc.setAnim("attack1", 4);
+        attackSide=true;
+        mc.setAnim("player_attack", 4);
         mc.animSpeed = .5;
 
-        vc.vel = new Vec3Polar(.2, rc.rot, 0).toRect();
+        vc.vel = new Vec3Polar(attackSpeed, rc.rot, 0).toRect();
     }
 
     @Override
@@ -48,15 +51,23 @@ public class PlayerAttackState extends State {
         if (!cc.collisions.isEmpty()) {
             vc.vel = new Vec3(0, 0, vc.vel.z);
         }
-
+        vc.vel=vc.vel.multiply(0.8);
         //Damage enemies
-        if ((int) mc.animIndex == 4) {
+        if ((int) mc.animIndex == 3 && mc.animSpeed>0) {
+            mc.animSpeed=0;
+            mc.animIndex=3;
             Vec3[] slash1 = new Vec3[]{new Vec3()};
             Vec3[] slash2 = new Vec3[]{};
             Vec2[] shape = new Vec2[7];
             shape[0] = pc.pos.toVec2();
             for (int i = 1; i < 7; i++) {
-                shape[i] = shape[0].add(new Vec3Polar(2, rc.rot - Math.PI / 2 - Math.PI / 12 + i * Math.PI / 6, 0).toRect().toVec2());
+                //shape[i] = shape[0].add(new Vec3Polar(2, rc.rot - Math.PI / 2 - Math.PI / 12 + i * Math.PI / 6, 0).toRect().toVec2());
+                if(attackSide){
+                    shape[i] = shape[0].add(new Vec3Polar(2, rc.rot - Math.PI / 6 + i * Math.PI / 5, 0).toRect().toVec2());
+                }
+                else{
+                    shape[i] = shape[0].add(new Vec3Polar(2, rc.rot - Math.PI + i * Math.PI / 5, 0).toRect().toVec2());
+                }
             }
             for (CollisionComponent cc : CollisionUtil.listAt(new Polygon(shape))) {
                 if (cc.ae instanceof Enemy) {
@@ -93,8 +104,26 @@ public class PlayerAttackState extends State {
         }
 
         //End anim
-        if (mc.animComplete() && Keys.anyPressed()) {
-            sc.setState(PlayerWalkingState.class);
+        if (mc.animSpeed==0) {
+            //vc.vel = new Vec3Polar(0, rc.rot, 0).toRect();
+            //mc.setModel("player_attack/4");
+            if(Keys.anyDown()){
+                sc.setState(PlayerWalkingState.class);
+            }
+            if(MouseInput.isPressed(0)){
+                rc.rot = cac.t;
+                if(attackSide){
+                    mc.setAnim("player_attack1", 4);
+                    attackSide=false;
+                }
+                else{
+                    attackSide=true;
+                    mc.setAnim("player_attack", 4);
+                }
+                mc.animSpeed = .5;
+
+                vc.vel = new Vec3Polar(attackSpeed, rc.rot, 0).toRect();
+            }
         }
     }
 

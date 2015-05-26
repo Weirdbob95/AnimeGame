@@ -14,7 +14,9 @@ public abstract class Keys {
     public static boolean anyPressed() {
         return !pressed.isEmpty();
     }
-
+    public static boolean anyDown() {
+        return !down.isEmpty();
+    }
     public static int getTime(int button) {
         if (!time.containsKey(button)) {
             return 0;
